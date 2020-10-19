@@ -5,7 +5,7 @@
 cut -d , -f 1 hgcA_hits_IMG_faa_data.csv > names.txt
 ```
 
-3. Make sure the combined fasta is all a one line fasta
+3. Make sure the combined fasta is a one line fasta
 ```{BASH}
 awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' combined.fasta > combined_one_line.fasta
 ```
