@@ -1,3 +1,5 @@
+## Pipeline for HgcA identification
+
 1. Merging sequences together
 
 ```{BASH}
@@ -30,6 +32,32 @@ for hit in $(cat scg-names.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-h
 ```{BASH}
 cut -d '_' -f 1:2 scg-names.txt > scg-contigs.txt
 for hit in $(cat scg-contigs.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-contig_his.fasta
+```
+
+## Pipeline for HgcB identification
+
+1. Extract all sequences on HgcA containing contigs
+```{BASH}
+for hit in $(cat names.txt); do grep $hit ~/data/HgcA/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 1 ; done > contigs.txt
+for hit in $(cat contigs.txt); do grep $hit Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 9| cut -d ';' -f 2 | cut -d '=' -f 2 ; done > contigs_hits.txt
+for hit in $(cat contigs_hits.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-contig_hits.fasta
+```
+2. Search HgcA containing contigs for HgcB
+```{BASH}
+hmmsearch -E 1e-50 --tblout scg-hgcB-hits.out hgcB.hmm scg-contig_hits.fasta
+```
+4. Process output into a CSV
+- Make sure you're in the directory with the output and your output ends in .out
+```{BASH}
+bash ~/data/HgcAB/hmmscan_rough_parse.sh scg-hgcB-hits-out.csv
+```
+5. extract the names of the the hits from parsed output
+```{BASH}
+cut -d , -f 1 scg-hgcB-hits-out.csv > scg-HgcB-names.txt
+```
+3. Extract HgcB hits from contigs
+```{BASH}
+for hit in $(cat scg-HgcB-names.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-HgcB-hits.fasta
 ```
 
 
