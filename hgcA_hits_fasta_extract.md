@@ -14,22 +14,22 @@ hmmsearch -E 1e-50 --tblout scg-hgcA-hits.out hgcA.hmm SCG_one_line.faa
 4. Process output into a CSV
 - Make sure you're in the directory with the output and your output ends in .out
 ```{BASH}
-bash ~/data/HgcAB/hmmscan_rough_parse.sh test.parse.out.csv
+bash ~/data/HgcAB/hmmscan_rough_parse.sh scg-hgcA-hits-out.csv
 ```
 5. extract the names of the the hits from parsed output
 ```{BASH}
-cut -d , -f 1 hgcA_hits_IMG_faa_data.csv > names.txt
+cut -d , -f 1 scg-hgcA-hits-out.csv > scg-names.txt
 ```
 6. Make fasta of hits
 
 ```{BASH}
-for hit in $(cat names.txt); do grep -A 1 $hit SCG_one_line.faa ; done>hits.fasta
+for hit in $(cat scg-names.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-hits.fasta
 ```
 
 7. Extract sequences for other sequences on the contig
 ```{BASH}
-cut -d _ -f 1:2 names.txt > contigs.txt
-for hit in $(cat contigs.txt); do grep -A 1 $hit SCG_one_line.faa ; done>contig_his.fasta
+cut -d _ -f 1:2 scg-names.txt > scg-contigs.txt
+for hit in $(cat scg-contigs.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-contig_his.fasta
 ```
 
 
