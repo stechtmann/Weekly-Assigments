@@ -28,7 +28,7 @@ for hit in $(cat scg-names.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-h
 
 7. Extract sequences for other sequences on the contig
 ```{BASH}
-cut -d _ -f 1:2 scg-names.txt > scg-contigs.txt
+cut -d '_' -f 1:2 scg-names.txt > scg-contigs.txt
 for hit in $(cat scg-contigs.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-contig_his.fasta
 ```
 
