@@ -1,4 +1,4 @@
-## Pipeline for HgcA identification
+## Pipeline for HgcA identification from SCG. You just have to modify the input files for the MetaG_T.faa
 
 1. Merging sequences together
 
@@ -36,28 +36,36 @@ for hit in $(cat scg-contigs.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg
 
 ## Pipeline for HgcB identification
 
-1. Extract all sequences on HgcA containing contigs
+1. Extract hit from hmm output
 ```{BASH}
-for hit in $(cat names.txt); do grep $hit ~/data/HgcA/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 1 ; done > contigs.txt
-for hit in $(cat contigs.txt); do grep $hit Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 9| cut -d ';' -f 2 | cut -d '=' -f 2 ; done > contigs_hits.txt
-for hit in $(cat contigs_hits.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-contig_hits.fasta
+bash ~/data/HgcA/hmmscan_rough_parse2.sh MetaG_T-hgcA-hits.out MetaG_T-hgcA-hits-out.csv
+
+2. extract the names of the the MetaG/MetaT hits from parsed output
+```{BASH}
+cut -d , -f 1 MetaG_T-hgcA-hits-out.csv > MetaG_T-names.txt
+```
+3. Extract all sequences on HgcA containing contigs
+```{BASH}
+for hit in $(cat MetaG_T-names.txt); do grep $hit ~/data/HgcA/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 1 ; done > MetaG_T-contigs.txt
+for hit in $(cat MetaG_T-contigs.txt); do grep $hit Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 9| cut -d ';' -f 2 | cut -d '=' -f 2 ; done > MetaG_T-contigs_hits.txt
+for hit in $(cat MetaG_Tcontigs_hits.txt); do grep -A 1 $hit MetaG_T_one_line.faa ; done>MetaG_T-contig_hits.fasta
 ```
 2. Search HgcA containing contigs for HgcB
 ```{BASH}
-hmmsearch -E 1e-50 --tblout scg-hgcB-hits.out hgcB.hmm scg-contig_hits.fasta
+hmmsearch -E 1e-50 --tblout MetaG_T-hgcB-hits.out hgcB.hmm MetaG_T-contig_hits.fasta
 ```
 4. Process output into a CSV
 - Make sure you're in the directory with the output and your output ends in .out
 ```{BASH}
-bash ~/data/HgcAB/hmmscan_rough_parse.sh scg-hgcB-hits-out.csv
+bash ~/data/HgcA/hmmscan_rough_parse2.sh MetaG_T-hgcB-hits.out MetaG_T-hgcB-hits-out.csv
 ```
 5. extract the names of the the hits from parsed output
 ```{BASH}
-cut -d , -f 1 scg-hgcB-hits-out.csv > scg-HgcB-names.txt
+cut -d , -f 1 MetaG_T-hgcB-hits-out.csv > MetaG_T-HgcB-names.txt
 ```
 3. Extract HgcB hits from contigs
 ```{BASH}
-for hit in $(cat scg-HgcB-names.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg-HgcB-hits.fasta
+for hit in $(cat MetaG_T-HgcB-names.txt); do grep -A 1 $hit MetaG_T-contig_hits.fasta ; done>MetaG_T-HgcB-hits.fasta
 ```
 
 
