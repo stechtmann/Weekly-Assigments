@@ -36,11 +36,12 @@ for hit in $(cat scg-contigs.txt); do grep -A 1 $hit SCG_one_line.faa ; done>scg
 
 ## Pipeline for HgcB identification
 
-1. Extract hit from hmm output
+1. Extract hit from hmm output from MetaG_T HgcA
 ```{BASH}
 bash ~/data/HgcA/hmmscan_rough_parse2.sh MetaG_T-hgcA-hits.out MetaG_T-hgcA-hits-out.csv
+```
 
-2. extract the names of the the MetaG/MetaT hits from parsed output
+2. extract the names of the the MetaG/MetaT HgcA hits from parsed output
 ```{BASH}
 cut -d , -f 1 MetaG_T-hgcA-hits-out.csv > MetaG_T-names.txt
 ```
