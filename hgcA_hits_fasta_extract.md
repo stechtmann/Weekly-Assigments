@@ -47,8 +47,8 @@ cut -d , -f 1 MetaG_T-hgcA-hits-out.csv > MetaG_T-names.txt
 ```
 3. Extract all sequences on HgcA containing contigs
 ```{BASH}
-for hit in $(cat MetaG_T-names.txt); do grep $hit ~/data/HgcA/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 1 ; done > MetaG_T-contigs.txt
-for hit in $(cat MetaG_T-contigs.txt); do grep $hit Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 9| cut -d ';' -f 2 | cut -d '=' -f 2 ; done > MetaG_T-contigs_hits.txt
+for hit in $(cat MetaG_T-names.txt); do grep $hit ~/data/HgcAB/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 1 ; done > MetaG_T-contigs.txt
+for hit in $(cat MetaG_T-contigs.txt); do grep $hit ~/data/HgcAB/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 9| cut -d ';' -f 2 | cut -d '=' -f 2 ; done > MetaG_T-contigs_hits.txt
 for hit in $(cat MetaG_Tcontigs_hits.txt); do grep -A 1 $hit MetaG_T_one_line.faa ; done>MetaG_T-contig_hits.fasta
 ```
 2. Search HgcA containing contigs for HgcB
