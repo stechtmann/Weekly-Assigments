@@ -51,10 +51,11 @@ for hit in $(cat MetaG_T-names.txt); do grep $hit ~/data/HgcAB/Maddy_gff/MetaG_T
 for hit in $(cat Contig_ID_of_HgcA_contigs.txt); do echo $hit; grep -c $hit ~/data/HgcAB/Maddy_gff/MetaG_T.gff; done > Count_of_genes_on_HgcA_contigs.txt
 for hit in $(cat Contig_ID_of_HgcA_contigs.txt); do grep $hit ~/data/HgcAB/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 9| sed -n 's/.*locus_tag=//p'| cut -d ';' -f 1; done > MetaG_T_gene_ID_HgcA-contigs_hits.txt
 for hit in $(cat MetaG_T_gene_ID_HgcA-contigs_hits.txt); do grep -A 1 $hit MetaG_T_one_line.faa ; done>MetaG_T-contig_hits.fasta
+sed ':a;N;$!ba;s/\n--\n/\n/g' MetaG_T-contig_hits.fasta > MetaG_T-contig_hits2.fasta
 ```
 2. Search HgcA containing contigs for HgcB
 ```{BASH}
-hmmsearch -E 1e-50 --tblout MetaG_T-hgcB-hits.out hgcB.hmm MetaG_T-contig_hits.fasta
+hmmsearch -E 1e-50 --tblout MetaG_T-hgcB-hits.out hgcB.hmm MetaG_T-contig_hits2.fasta
 ```
 4. Process output into a CSV
 - Make sure you're in the directory with the output and your output ends in .out
