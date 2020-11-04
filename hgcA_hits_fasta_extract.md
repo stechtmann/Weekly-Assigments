@@ -55,7 +55,7 @@ sed ':a;N;$!ba;s/\n--\n/\n/g' MetaG_T-contig_hits.fasta > MetaG_T-contig_hits2.f
 ```
 2. Search HgcA containing contigs for HgcB
 ```{BASH}
-hmmsearch -E 1e-30 --tblout MetaG_T-hgcB-hits.out hgcB.hmm MetaG_T-contig_hits2.fasta
+hmmsearch -E 1e-30 --tblout MetaG_T-hgcB-hits.out hgcB.HMM MetaG_T-contig_hits2.fasta
 ```
 4. Process output into a CSV
 - Make sure you're in the directory with the output and your output ends in .out
