@@ -91,3 +91,12 @@ awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { print
 ```{BASH}
 for hit in $(cat names.txt); do grep -A 1 $hit combined_one_line.fasta ; done>hits.fasta
 ```
+## Finding contigs for HgcB
+1. extract the names of the the MetaG/MetaT HgcA hits from parsed output
+```{BASH}
+cut -d , -f 1 Steve_test_HB_all.out.csv > HgcB-names.txt
+```
+2. Extract all sequences on HgcA containing contigs
+```{BASH}
+for hit in $(cat HgcB-names.txt); do grep $hit ~/data/HgcAB/Maddy_gff/MetaG_T.gff|cut -d$'\t' -f 1 ; done > Contig_ID_of_HgcB_contigs.txt
+```
