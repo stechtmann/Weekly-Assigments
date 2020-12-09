@@ -94,7 +94,7 @@ for hit in $(cat names.txt); do grep -A 1 $hit combined_one_line.fasta ; done>hi
 ## Finding contigs for HgcB
 1. extract the names of the the MetaG/MetaT HgcA hits from parsed output
 ```{BASH}
-cut -d , -f 1 Steve_test_HB_all.out.csv > HgcB-names.txt
+cut -d , -f 1  MetaG_T-hgcB-hits-out.csv > HgcB-names.txt
 ```
 2. Extract all sequences on HgcA containing contigs
 ```{BASH}
