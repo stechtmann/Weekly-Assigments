@@ -68,7 +68,7 @@ cut -d , -f 1 MetaG_T-hgcB-hits-out.csv > MetaG_T-HgcB-names.txt
 ```
 3. Extract HgcB hits from contigs
 ```{BASH}
-for hit in $(cat MetaG_T-HgcB-names.txt); do grep -w -A 1 $hit MetaG_T-contig_hits.fasta ; done>MetaG_T-HgcB-hits.fasta
+for hit in $(cat MetaG_T-HgcB-names.txt); do grep -w -A 1 $hit MetaG_T-contig_hits2.fasta ; done>MetaG_T-HgcB-hits.fasta
 ```
 
 
